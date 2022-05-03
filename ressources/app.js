@@ -119,6 +119,7 @@ const createBoard = () => {
 
 //flip your card
 function flipCard() {
+  new Audio('../ressources/audio/Card-flip-sound-effect.mp3').play()
   this.classList.toggle('card-click')
   this.classList.remove('card-off')
   this.classList.add('card-on')
@@ -137,17 +138,20 @@ function checkForMatch () {
   const choiceIdOne = cardsChosenId[0]
   const choiceIdTwo = cardsChosenId[1]
   if(choiceIdOne == choiceIdTwo) {
+    new Audio('../ressources/audio/Fail-sound.mp3').play()
     cards[choiceIdOne].classList.remove('card-on')
     cards[choiceIdOne].classList.add('card-off')
     cards[choiceIdOne].setAttribute('src', 'ressources/images/Back.png')
   }
   else if(cardsChosen[0] === cardsChosen[1]) {
+    new Audio('../ressources/audio/Level-up-sound-effect.mp3').play()
     resultDisplay.textContent++
     cards[choiceIdOne].setAttribute('src', 'ressources/images/white.png')
     cards[choiceIdTwo].setAttribute('src', 'ressources/images/white.png')
     cards[choiceIdOne].removeEventListener('click', flipCard)
     cards[choiceIdTwo].removeEventListener('click', flipCard)
   } else {
+    new Audio('../ressources/audio/Fail-sound.mp3').play()
     cardsChosenId.forEach((id) => {
     cards[id].classList.remove('card-on')
     cards[id].classList.add('card-off')
