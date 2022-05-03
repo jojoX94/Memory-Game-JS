@@ -111,6 +111,7 @@ const createBoard = () => {
     card.setAttribute('src', 'ressources/images/Back.png')
     card.setAttribute('data-id', i)
     card.classList.add('card')
+    card.classList.add('card-off')
     card.addEventListener('click', flipCard)
     grid.appendChild(card)
   }
@@ -118,6 +119,9 @@ const createBoard = () => {
 
 //flip your card
 function flipCard() {
+  this.classList.toggle('card-click')
+  this.classList.remove('card-off')
+  this.classList.add('card-on')
   let cardId = this.getAttribute('data-id')
   cardsChosen.push(cardArray[cardId].name)
   cardsChosenId.push(cardId)
@@ -127,4 +131,34 @@ function flipCard() {
   }
 }
 
+function checkForMatch () {
+  const cards = document.querySelectorAll('.grid  img')
+  console.log(cards)
+  const choiceIdOne = cardsChosenId[0]
+  const choiceIdTwo = cardsChosenId[1]
+  if(choiceIdOne == choiceIdTwo) {
+    cards[choiceIdOne].classList.remove('card-on')
+    cards[choiceIdOne].classList.add('card-off')
+    cards[choiceIdOne].setAttribute('src', 'ressources/images/Back.png')
+  }
+  else if(cardsChosen[0] === cardsChosen[1]) {
+    resultDisplay.textContent++
+    cards[choiceIdOne].setAttribute('src', 'ressources/images/white.png')
+    cards[choiceIdTwo].setAttribute('src', 'ressources/images/white.png')
+    cards[choiceIdOne].removeEventListener('click', flipCard)
+    cards[choiceIdTwo].removeEventListener('click', flipCard)
+  } else {
+    cardsChosenId.forEach((id) => {
+    cards[id].classList.remove('card-on')
+    cards[id].classList.add('card-off')
+    cards[id].setAttribute('src', 'ressources/images/Back.png')
+    cards[id].setAttribute('src', 'ressources/images/Back.png')
+    })
+
+  }
+  cardsChosen = []
+  cardsChosenId = []
+}
+
 createBoard()
+console.log(cardArray)
